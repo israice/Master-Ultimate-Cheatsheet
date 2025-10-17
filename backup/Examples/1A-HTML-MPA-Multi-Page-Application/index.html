@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Пример импортирования HTML</title>
+
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; text-align: center; }
+    main { padding: 2em; }
+  </style>
+
+</head>
+<body>
+    
+  <!-- Здесь будут подключаться внешние HTML-файлы -->
+  <div id="header"></div>
+
+  <main>
+    <h1>MPA = Multi-Page Application</h1>
+    <p>Многостраничный HTML сайт</p>
+  </main>
+
+  <div id="footer"></div>
+  <!-- ------------------------------------------ -->
+
+
+  <script>
+    //Скрипт, который подгружает header.html и footer.html
+
+    // Импорт файлов
+    loadHTML('header', 'header.html');
+    loadHTML('footer', 'footer.html');
+
+    // Универсальная функция для загрузки HTML-файлов
+    function loadHTML(id, file) {
+      fetch(file)
+        .then(response => {
+          if (!response.ok) throw new Error(`Ошибка загрузки ${file}`);
+          return response.text();
+        })
+        .then(data => {
+          document.getElementById(id).innerHTML = data;
+        })
+        .catch(error => {
+          document.getElementById(id).innerHTML = `<p style="color:red;">${error}</p>`;
+        });
+    }
+
+  </script>
+
+</body>
+</html>

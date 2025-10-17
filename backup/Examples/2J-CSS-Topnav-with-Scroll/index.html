@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topnav with Scroll</title>
+
+  <style>
+    .topnavcontainer { position: relative; }
+    #subtopnav { overflow: hidden; white-space: nowrap; display: flex; background-color: #333; color: white; }
+    #subtopnav a { display: inline-block; color: #f2f2f2; text-align: center; padding: 14px 16px; text-decoration: none; font-size: 17px; }
+    #subtopnav a:hover { background-color: #ddd; color: black; }
+  </style>
+  
+</head>
+<body>
+
+<!-- Top Navigation Bar -->
+<div class="topnavcontainer" onmouseleave="endscrolling_subtopnav(event)">
+  <div id="subtopnav" onmousedown="startscrolling_subtopnav(event)" onmousemove="scrolling_subtopnav(event)" onmouseup="endscrolling_subtopnav(event)" onclick="return pellessii(event)">
+    <!-- Top Navigation Links -->
+    <a href="/html/default.asp" title="HTML Tutorial">HTML</a>
+    <a href="/css/default.asp" title="CSS Tutorial">CSS</a>
+    <a href="/js/default.asp" title="JavaScript Tutorial">JAVASCRIPT</a>
+    <a href="/sql/default.asp" title="SQL Tutorial">SQL</a>
+    <a href="/python/default.asp" title="Python Tutorial">PYTHON</a>
+    <a href="/bootstrap/bootstrap_ver.asp" title="Bootstrap Tutorial">BOOTSTRAP</a>
+    <a href="/react/default.asp" title="React Tutorial">REACT</a>
+    <a href="/mysql/default.asp" title="MySQL Tutorial">MYSQL</a>
+    <a href="/jquery/default.asp" title="JQuery Tutorial">JQUERY</a>
+    <a href="/nodejs/default.asp" title="Node.js Tutorial">NODEJS</a>
+    <a href="/typescript/index.php" title="TypeScript Tutorial">TYPESCRIPT</a>
+    <a href="/angular/default.asp" title="Angular Tutorial">ANGULAR</a>
+    <a href="/angularjs/default.asp" title="Angular.js Tutorial">ANGULARJS</a>
+    <a href="/git/default.asp" title="Git Tutorial">GIT</a>
+    <a href="/postgresql/index.php" title="PostgreSQL Tutorial">POSTGRESQL</a>
+    <a href="/mongodb/index.php" title="MongoDB Tutorial">MONGODB</a>
+    <a href="/cybersecurity/index.php" title="Cyber security Tutorial">CYBERSECURITY</a>
+    <a href="/datascience/default.asp" title="Data science Tutorial">DATA SCIENCE</a>
+    <a href="/programming/index.php" title="Introduction to Programming">INTRO TO PROGRAMMING</a>
+    <a href="/bash/index.php" title="Bash Tutorial">BASH</a>
+    <a href="javascript:void(0)" style="width:50px;visibility:hidden;"></a>  
+
+  </div>
+</div>
+
+<script>
+  // Объявляем переменные для отслеживания состояния перетаскивания.
+  // isDragging - флаг, показывающий, что перетаскивание активно.
+  // startX - начальная позиция мыши по оси X.
+  // startScrollLeft - начальное положение прокрутки контейнера.
+  let isDragging = false;
+  let startX;
+  let startScrollLeft;
+
+  // Получаем элемент контейнера по его ID. Это элемент, который мы будем прокручивать.
+  const container = document.getElementById('subtopnav');
+
+  // Добавляем слушатель события на нажатие мыши (mousedown).
+  // Когда пользователь нажимает мышь на контейнере, начинаем перетаскивание.
+  container.addEventListener('mousedown', (event) => {
+    isDragging = true;  // Включаем флаг перетаскивания.
+    startX = event.pageX;  // Запоминаем начальную позицию мыши.
+    startScrollLeft = container.scrollLeft;  // Запоминаем текущее положение прокрутки.
+    document.body.style.cursor = 'grabbing';  // Меняем курсор на "захватывающий" для визуального эффекта.
+    event.preventDefault();  // Предотвращаем стандартное поведение браузера (например, выделение текста).
+  });
+
+  // Добавляем слушатель события на движение мыши (mousemove) на весь документ.
+  // Это позволяет продолжать перетаскивание даже если мышь выходит за пределы контейнера.
+  document.addEventListener('mousemove', (event) => {
+    if (!isDragging) return;  // Если перетаскивание не активно, ничего не делаем.
+    
+    // Вычисляем разницу в позиции мыши.
+    const deltaX = event.pageX - startX;
+    
+    // Обновляем прокрутку контейнера. Минус делает прокрутку "натуральной" (в обратную сторону от движения мыши).
+    container.scrollLeft = startScrollLeft - deltaX;
+    
+    event.preventDefault();  // Предотвращаем стандартное поведение.
+  });
+
+  // Добавляем слушатель события на отпускание мыши (mouseup) на весь документ.
+  // Когда мышь отпущена, заканчиваем перетаскивание.
+  document.addEventListener('mouseup', () => {
+    isDragging = false;  // Выключаем флаг перетаскивания.
+    document.body.style.cursor = 'default';  // Возвращаем курсор в обычное состояние.
+  });
+
+  // Добавляем слушатель события на клик (click) на контейнер.
+  // Это нужно, чтобы предотвратить клик по ссылкам внутри контейнера, если было перетаскивание.
+  container.addEventListener('click', (event) => {
+    // Проверяем, было ли значительное движение мыши (больше 5 пикселей).
+    // Если да, то это было перетаскивание, а не клик — отменяем клик.
+    if (Math.abs(event.pageX - startX) > 5) {
+      event.preventDefault();  // Предотвращаем переход по ссылке или другие действия клика.
+    }
+  }, true);  // Используем фазу захвата (capture phase), чтобы обработчик сработал раньше других.
+</script>
+
+</body>
+</html>

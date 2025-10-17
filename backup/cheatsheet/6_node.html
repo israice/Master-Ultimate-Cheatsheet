@@ -1,0 +1,68 @@
+<h1>Node.js Cheatsheet</h1>
+
+<div class="cheatsheet-item">
+    <h2>Changing HTML Content</h2>
+    <div class="example-container">
+        <div class="example-render">
+            <p>This demonstrates changing HTML content with JavaScript.</p>
+        </div>
+        <div class="example-code">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-javascript">function changeText() {
+  document.getElementById("demo").innerHTML = "Hello, JavaScript!";
+}</code></pre>
+            <iframe height="300" style="width: 100%;" scrolling="no" title="Prism.js example" src="https://codepen.io/demostanis/embed/preview/NOBPgW?default-tab=html&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+            See the Pen <a href="https://codepen.io/demostanis/pen/NOBPgW">
+            Prism.js example</a> by demo (<a href="https://codepen.io/demostanis">@demostanis</a>)
+            on <a href="https://codepen.io">CodePen</a>.
+            </iframe>
+        </div>
+    </div>
+</div>
+
+<div class="cheatsheet-item">
+    <h2>Writing to the Console</h2>
+    <div class="example-container">
+        <div class="example-render">
+            <p>This demonstrates writing to the browser console.</p>
+        </div>
+        <div class="example-code">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-javascript">function writeToConsole() {
+  console.log("Hello from the console!");
+}</code></pre>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const codeContainer = button.parentElement;
+        const code = codeContainer.querySelector('pre code');
+        if (!code) {
+            console.error('Could not find code element to copy.');
+            return;
+        }
+
+        const textToCopy = code.innerText;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            button.innerText = 'Copied!';
+            button.style.backgroundColor = '#aeffae';
+            setTimeout(() => {
+                button.innerText = 'Copy';
+                button.style.backgroundColor = '';
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            button.innerText = 'Failed!';
+            button.style.backgroundColor = '#ffaaaa';
+             setTimeout(() => {
+                button.innerText = 'Copy';
+                button.style.backgroundColor = '';
+            }, 2000);
+        });
+    });
+});
+</script>

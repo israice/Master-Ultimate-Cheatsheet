@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; text-align: center; background-color: #fafafa; color: #333; }
+    main {  padding: 2em; min-height: 60vh; opacity: 1; transition: opacity 0.5s ease; }
+  .fade { opacity: 1; }
+  .fade.hidden { opacity: 0; }
+  </style>
+
+  <title>SPA с анимацией переходов</title>
+
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <main id="content" class="fade"></main>
+
+  <div id="footer"></div>
+
+
+
+  <script src="./logic/app.js" type="module"></script>
+
+</body>
+</html>

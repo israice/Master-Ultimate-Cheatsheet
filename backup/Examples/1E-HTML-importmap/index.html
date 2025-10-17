@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Importmap HTML Example</title>
+</head>
+<body>
+  <h1>Main Page</h1>
+  
+  <!-- Контейнер, куда вставим HTML -->
+  <div id="content"></div>
+
+  <!-- Import map -->
+  <script type="importmap">
+  {
+    "imports": {
+      "loader": "./loader.js"
+    }
+  }
+  </script>
+
+  <!-- Модуль -->
+  <script type="module">
+    import { loadHTML } from "loader";
+
+    // Загружаем importmap.html в контейнер
+    loadHTML('importmap.html', document.getElementById('content'));
+  </script>
+</body>
+</html>

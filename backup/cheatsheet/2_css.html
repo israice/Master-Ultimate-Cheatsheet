@@ -1,0 +1,67 @@
+<h1>CSS Cheatsheet</h1>
+
+<div class="cheatsheet-item">
+    <h2>Selectors</h2>
+    <p>You can select elements by tag name (e.g., <code>body</code>, <code>h1</code>, <code>p</code>), class name (e.g., <code>.container</code>), or ID.</p>
+</div>
+
+<div class="cheatsheet-item">
+    <h2>Properties</h2>
+    <p>Here are some common CSS properties:</p>
+    <ul>
+        <li><code>font-family</code>: Sets the font for an element.</li>
+        <li><code>background-color</code>: Sets the background color.</li>
+        <li><code>color</code>: Sets the text color.</li>
+        <li><code>border</code>: Sets a border around an element.</li>
+    </ul>
+</div>
+
+<div class="cheatsheet-item">
+    <h2>Example</h2>
+    <div class="example-container">
+        <div class="example-render">
+            <style>
+                .example-p-2 { color: red; }
+            </style>
+            <p class="example-p-2">This paragraph is red.</p>
+        </div>
+        <div class="example-code">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-css">p {
+    color: red;
+}</code></pre>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const codeContainer = button.parentElement;
+        const code = codeContainer.querySelector('pre code');
+        if (!code) {
+            console.error('Could not find code element to copy.');
+            return;
+        }
+
+        const textToCopy = code.innerText;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            button.innerText = 'Copied!';
+            button.style.backgroundColor = '#aeffae';
+            setTimeout(() => {
+                button.innerText = 'Copy';
+                button.style.backgroundColor = '';
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            button.innerText = 'Failed!';
+            button.style.backgroundColor = '#ffaaaa';
+             setTimeout(() => {
+                button.innerText = 'Copy';
+                button.style.backgroundColor = '';
+            }, 2000);
+        });
+    });
+});
+</script>

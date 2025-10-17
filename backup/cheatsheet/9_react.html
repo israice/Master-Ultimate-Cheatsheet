@@ -1,0 +1,79 @@
+<h1>React Cheatsheet</h1>
+
+<div class="cheatsheet-item">
+    <h2>Simple Component</h2>
+    <div class="example-container">
+        <div class="example-render">
+            <p>A simple React functional component.</p>
+        </div>
+        <div class="example-code">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-jsx">function Welcome(props) {
+  return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
+}
+
+// Usage:
+// const element = &lt;Welcome name="Sara" /&gt;;
+// ReactDOM.render(element, document.getElementById('root'));</code></pre>
+        </div>
+    </div>
+</div>
+
+<div class="cheatsheet-item">
+    <h2>Component with State</h2>
+    <div class="example-container">
+        <div class="example-render">
+            <p>A component using the `useState` hook.</p>
+        </div>
+        <div class="example-code">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-jsx">import React, { useState } from 'react';
+
+function Example() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;You clicked {count} times&lt;/p&gt;
+      &lt;button onClick={() => setCount(count + 1)}&gt;
+        Click me
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const codeContainer = button.parentElement;
+        const code = codeContainer.querySelector('pre code');
+        if (!code) {
+            console.error('Could not find code element to copy.');
+            return;
+        }
+
+        const textToCopy = code.innerText;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            button.innerText = 'Copied!';
+            button.style.backgroundColor = '#aeffae';
+            setTimeout(() => {
+                button.innerText = 'Copy';
+                button.style.backgroundColor = '';
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            button.innerText = 'Failed!';
+            button.style.backgroundColor = '#ffaaaa';
+             setTimeout(() => {
+                button.innerText = 'Copy';
+                button.style.backgroundColor = '';
+            }, 2000);
+        });
+    });
+});
+</script>

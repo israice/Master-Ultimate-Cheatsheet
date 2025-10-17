@@ -1,0 +1,66 @@
+<h1>TypeScript Cheatsheet</h1>
+
+<div class="cheatsheet-item">
+    <h2>Changing HTML Content</h2>
+    <div class="example-container">
+        <div class="example-render">
+            <p>This demonstrates changing HTML content with JavaScript.</p>
+        </div>
+        <div class="example-code">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-typescript">function changeText(): void {
+  const demoElement = document.getElementById("demo");
+  if (demoElement) {
+    demoElement.innerHTML = "Hello, TypeScript!";
+  }
+}</code></pre>
+        </div>
+    </div>
+</div>
+
+<div class="cheatsheet-item">
+    <h2>Writing to the Console</h2>
+    <div class="example-container">
+        <div class="example-render">
+            <p>This demonstrates writing to the browser console.</p>
+        </div>
+        <div class="example-code">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-typescript">function writeToConsole(): void {
+  console.log("Hello from the console!");
+}</code></pre>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const codeContainer = button.parentElement;
+        const code = codeContainer.querySelector('pre code');
+        if (!code) {
+            console.error('Could not find code element to copy.');
+            return;
+        }
+
+        const textToCopy = code.innerText;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            button.innerText = 'Copied!';
+            button.style.backgroundColor = '#aeffae';
+            setTimeout(() => {
+                button.innerText = 'Copy';
+                button.style.backgroundColor = '';
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            button.innerText = 'Failed!';
+            button.style.backgroundColor = '#ffaaaa';
+             setTimeout(() => {
+                button.innerText = 'Copy';
+                button.style.backgroundColor = '';
+            }, 2000);
+        });
+    });
+});
+</script>

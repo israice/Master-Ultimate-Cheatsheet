@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Cheatsheet</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background-color: #1a1a1a; color: #e0e0e0; margin: 0; padding: 20px; }
+        h1 { text-align: center; color: #ffffff; margin: 0 0 20px 0; font-size: 2rem; }
+        #search-bar { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #444; border-radius: 5px; background-color: #2a2a2a; color: #e0e0e0; font-size: 14px; transition: border-color 0.2s; }
+        #search-bar:focus { outline: none; border-color: #66b3ff; }
+        #search-bar::placeholder { color: #888; }
+        .cheatsheet-container { margin-bottom: 15px; border-radius: 5px; background-color: #252525; border: 1px solid #333; overflow: hidden; }
+        .cheatsheet-header { padding: 15px; cursor: pointer; background-color: #0066cc; color: #ffffff; border-radius: 0; font-weight: 600; transition: background-color 0.2s; user-select: none; }
+        .cheatsheet-header:hover { background-color: #0052a3; }
+        .cheatsheet-content { padding: 15px; background-color: #252525; color: #e0e0e0; }
+        .cheatsheet-content h2, .cheatsheet-content h3, .cheatsheet-content h4 { color: #ffffff; }
+        .cheatsheet-content p { color: #e0e0e0; }
+        .cheatsheet-content a { color: #66b3ff; text-decoration: none; }
+        .cheatsheet-content a:hover { color: #99ccff; text-decoration: underline; }
+        .cheatsheet-content code { background-color: #1e1e1e; color: #d4d4d4; padding: 2px 6px; border-radius: 3px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; }
+        .cheatsheet-content pre { background-color: #1e1e1e; border: 1px solid #333; border-radius: 5px; padding: 15px; overflow-x: auto; }
+        .cheatsheet-content pre code { background-color: transparent; padding: 0; }
+        .cheatsheet-content table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+        .cheatsheet-content table th, .cheatsheet-content table td { border: 1px solid #444; padding: 8px; text-align: left; }
+        .cheatsheet-content table th { background-color: #333; color: #ffffff; }
+        .cheatsheet-content table tr:nth-child(even) { background-color: #2a2a2a; }
+        .cheatsheet-content ul, .cheatsheet-content ol { color: #e0e0e0; }
+        @media (max-width: 768px) { body { padding: 10px; } h1 { font-size: 1.5rem; } .cheatsheet-header { padding: 12px; } .cheatsheet-content { padding: 12px; } }
+
+        /* Component-specific styles */
+        .cheatsheet-item {
+            border: 2px solid #ff4444;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #252525;
+        }
+        .cheatsheet-item h2 {
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        .cheatsheet-item h3 {
+            color: #b0b0b0;
+            margin: 10px 0 5px 0;
+            font-size: 1rem;
+        }
+        
+        .example-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            border-radius: 5px;
+        }
+        
+        @media (min-width: 768px) {
+            .example-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .example-render {
+            color: #e0e0e0;
+            padding: 5px;
+        }
+        
+        .example-render p {
+            margin: 5px 0;
+        }
+        
+        .example-render a {
+            color: #66b3ff;
+            text-decoration: none;
+        }
+        
+        .example-render a:hover {
+            color: #99ccff;
+            text-decoration: underline;
+        }
+        
+        .example-code {
+            position: relative;
+            background-color: #1e1e1e;
+            padding: 8px;
+            padding-top: 35px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #333;
+        }
+        
+        .example-code pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        .example-code code {
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 4px 8px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            border: 1px solid #555;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        
+        .copy-btn:hover {
+            background-color: #4a4a4a;
+            border-color: #666;
+        }
+        
+        .cheatsheet-content li {
+            margin: 3px 0;
+        }
+        
+        .cheatsheet-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .cheatsheet-list {
+            overflow-x: auto;
+            border: rgb(46, 55, 222) 2px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ultimate Cheatsheet</h1>
+
+    <input type="text" id="search-bar" placeholder="Search for a cheat sheet...">
+
+    <div id="cheatsheet-list"></div>
+
+    <script>
+        // Конфигурация для Autoloader'а Prism
+        Prism = window.Prism || {};
+        Prism.plugins = Prism.plugins || {};
+        Prism.plugins.autoloader = Prism.plugins.autoloader || {};
+        Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/';
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cheatsheetList = document.getElementById('cheatsheet-list');
+            const cheatsheetFiles = [
+                'cheatsheet/1_html.html',
+                'cheatsheet/2_css.html',
+                'cheatsheet/3_javascript_frontend.html',
+                'cheatsheet/4_javascript_backend.html',
+                'cheatsheet/5_jquery.html',
+                'cheatsheet/6_node.html',
+                'cheatsheet/7_express.html',
+                'cheatsheet/8_typescript.html',
+                'cheatsheet/9_react.html'
+            ];
+
+            const loadedContent = {}; // Кэш загруженного контента
+
+            // Загрузка контента по требованию
+            async function loadContent(file) {
+                if (loadedContent[file]) {
+                    return loadedContent[file];
+                }
+
+                try {
+                    const response = await fetch(file);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const html = await response.text();
+                    loadedContent[file] = html;
+                    return html;
+                } catch (error) {
+                    console.error('Error loading cheatsheet:', file, error);
+                    return '<p style="color: #ff6b6b;">Error loading content</p>';
+                }
+            }
+
+            // Создаем заголовки для всех файлов
+            cheatsheetFiles.forEach((file, index) => {
+                const container = document.createElement('div');
+                container.classList.add('cheatsheet-container');
+                container.dataset.file = file;
+
+                const header = document.createElement('div');
+                header.classList.add('cheatsheet-header');
+                const fileName = file.split('/').pop().replace('.html', '').replace(/_/g, ' ').replace(/^\d+\s*/, '');
+                header.textContent = fileName.charAt(0).toUpperCase() + fileName.slice(1);
+                
+                const content = document.createElement('div');
+                content.classList.add('cheatsheet-content');
+                content.style.display = 'none';
+
+                container.appendChild(header);
+                container.appendChild(content);
+                cheatsheetList.appendChild(container);
+
+                // Обработчик клика на заголовок
+                header.addEventListener('click', async () => {
+                    const allContainers = document.querySelectorAll('.cheatsheet-container');
+                    const isCurrentlyOpen = content.style.display === 'block';
+
+                    // Закрываем все секции
+                    allContainers.forEach(cont => {
+                        cont.querySelector('.cheatsheet-content').style.display = 'none';
+                    });
+
+                    // Если текущая секция была закрыта, открываем её
+                    if (!isCurrentlyOpen) {
+                        // Загружаем контент, если ещё не загружен
+                        if (!content.innerHTML) {
+                            const html = await loadContent(file);
+                            content.innerHTML = html;
+                            Prism.highlightAllUnder(content);
+                        }
+                        content.style.display = 'block';
+                    }
+                });
+            });
+
+            // Автоматически открываем первую секцию
+            const firstContainer = document.querySelector('.cheatsheet-container');
+            if (firstContainer) {
+                firstContainer.querySelector('.cheatsheet-header').click();
+            }
+
+            // Поиск
+            document.getElementById('search-bar').addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                document.querySelectorAll('.cheatsheet-container').forEach(container => {
+                    const name = container.querySelector('.cheatsheet-header').textContent.toLowerCase();
+                    container.style.display = name.includes(query) ? 'block' : 'none';
+                });
+            });
+
+            // Event delegation for copy buttons
+            cheatsheetList.addEventListener('click', async (e) => {
+                if (e.target.classList.contains('copy-btn')) {
+                    const copyButton = e.target;
+                    const codeBlock = copyButton.parentElement.querySelector('pre code');
+                    if (!codeBlock) {
+                        console.error('Code block not found for this copy button.');
+                        return;
+                    }
+                    try {
+                        await navigator.clipboard.writeText(codeBlock.innerText);
+                        copyButton.textContent = 'Copied!';
+                        copyButton.style.backgroundColor = '#2d5016';
+                        copyButton.style.borderColor = '#4a7c2a';
+                    } catch (err) {
+                        console.error('Failed to copy text: ', err);
+                        copyButton.textContent = 'Failed!';
+                        copyButton.style.backgroundColor = '#5c1f1f';
+                        copyButton.style.borderColor = '#8b3030';
+                    }
+                    setTimeout(() => {
+                        copyButton.textContent = 'Copy';
+                        copyButton.style.backgroundColor = '';
+                        copyButton.style.borderColor = '';
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

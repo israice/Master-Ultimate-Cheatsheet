@@ -1,0 +1,22 @@
+<style>
+  h1 { text-align: left; color: #e6eef1; margin: 0; font-size: 2rem; }
+  /* новый flex-контейнер для заголовка + поиска */
+  .header-row { display: flex; align-items: center; gap: 1rem; padding: 8px; }
+  /* поиск занимает оставшееся пространство */
+  #search-bar { flex: 1; padding: 12px; margin: 0; border: 1px solid #31363a; border-radius: 5px; background-color: #14181a; color: #e6eef1; font-size: 14px; transition: border-color 0.18s, box-shadow 0.18s, background-color 0.18s; }
+  #search-bar:focus { outline: none; border-color: #4dd0e1; box-shadow: 0 0 0 4px rgba(77,208,225,0.08); }
+  #search-bar::placeholder { color: #7a8488; }
+  /* гарантировать вертикальное выравнивание заголовка */
+  .header-row h1 { align-self: center; }
+  /* адаптив: на узких экранах пусть встанут друг под другом */
+  @media (max-width: 600px) { 
+    .header-row { flex-direction: column; align-items: flex-start; } 
+    #search-bar { width: 100%; margin-bottom: 12px; } 
+    }
+</style>
+
+
+<div class="header-row">
+  <h1>Ultimate Cheatsheet</h1>
+  <input type="text" id="search-bar" placeholder="Search for a cheat sheet...">
+</div>

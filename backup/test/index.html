@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal SPA Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <main id="content">
+        <!-- Content will be loaded here -->
+    </main>
+    <script>
+        // app.js
+        const content = document.getElementById('content');
+
+        const routes = {
+            'home': () => {
+                content.innerHTML = `
+                    <h1>Welcome to Home</h1>
+                    <p>This is the home page of our minimal SPA.</p>
+                `;
+            },
+            'about': () => {
+                content.innerHTML = `
+                    <h1>About Us</h1>
+                    <p>This is a simple single-page application built with vanilla JavaScript.</p>
+                `;
+            },
+            'contact': () => {
+                content.innerHTML = `
+                    <h1>Contact</h1>
+                    <p>Email: example@email.com</p>
+                `;
+            }
+        };
+
+        function navigate() {
+            const hash = window.location.hash.slice(1) || 'home';
+            const page = routes[hash] || routes['home'];
+            page();
+        }
+
+        window.addEventListener('hashchange', navigate);
+        window.addEventListener('load', navigate);
+    </script>
+</body>
+</html>
